@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.charge.ssmv.mapper.PermissionMapper" >
+  <resultMap id="BaseResultMap" type="cn.charge.ssmv.domain.Permission" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="menu_id" property="menuId" jdbcType="BIGINT" />
+    <result column="sn" property="sn" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_permission
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.charge.ssmv.domain.Permission" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_permission (id, name, url, 
+      remarks, state, menu_id, 
+      sn)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{remarks,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{menuId,jdbcType=BIGINT}, 
+      #{sn,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.charge.ssmv.domain.Permission" >
+    update t_permission
+    set name = #{name,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      menu_id = #{menuId,jdbcType=BIGINT},
+      sn = #{sn,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, name, url, remarks, state, menu_id, sn
+    from t_permission
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, name, url, remarks, state, menu_id, sn
+    from t_permission
+  </select>
+  <!--根据登陆用户查询权限-->
+  <select id="findPermissionByloginuser" resultMap="BaseResultMap" parameterType="long">
+    SELECT u.user_name,u.id,r.id as roleid,r.role_name,p.url,p.`name`,p.id,p.sn,p.menu_id,p.state
+    FROM t_user u JOIN t_user_role ur ON u.id=ur.user_id
+    JOIN t_role r ON ur.role_id=r.id
+    JOIN t_role_permission rp ON r.id=rp.role_id
+    JOIN t_permission p ON rp.permission_id=p.id WHERE u.id=#{id} and p.state=0 and r.state=0
+  </select>
+  <!--高级分页查询 根据资源名字或者编号-->
+  <select id="selectAllForList" resultMap="BaseResultMap">
+    SELECT id,name,url,remarks,state,menu_id,sn FROM t_permission
+    <where>
+      <if test="keyname !=null">
+        AND t_permission.name LIKE concat("%",#{keyname},"%")
+      </if>
+    </where>
+  </select>
+
+  <!--删除多条数据-->
+  <delete id="moreDelete" parameterType="list">
+    DELETE FROM t_permission WHERE id IN
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+</mapper>

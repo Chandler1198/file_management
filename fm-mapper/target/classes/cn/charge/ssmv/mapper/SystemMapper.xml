@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.charge.ssmv.mapper.SystemMapper" >
+  <resultMap id="BaseResultMap" type="cn.charge.ssmv.domain.System" >
+    <id column="  id" property="id" jdbcType="BIGINT" />
+    <result column="system_name" property="systemName" jdbcType="VARCHAR" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="company_phone" property="companyPhone" jdbcType="VARCHAR" />
+    <result column="company_fax" property="companyFax" jdbcType="VARCHAR" />
+    <result column="company_address" property="companyAddress" jdbcType="VARCHAR" />
+    <result column="company_website" property="companyWebsite" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <insert id="insert" parameterType="cn.charge.ssmv.domain.System" >
+    insert into t_system (`id`, system_name, company_name,
+      company_phone, company_fax, company_address, 
+      company_website)
+    values (#{id,jdbcType=BIGINT}, #{systemName,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, 
+      #{companyPhone,jdbcType=VARCHAR}, #{companyFax,jdbcType=VARCHAR}, #{companyAddress,jdbcType=VARCHAR}, 
+      #{companyWebsite,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.charge.ssmv.domain.System" >
+    update t_system
+    set system_name = #{systemName,jdbcType=VARCHAR},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      company_phone = #{companyPhone,jdbcType=VARCHAR},
+      company_fax = #{companyFax,jdbcType=VARCHAR},
+      company_address = #{companyAddress,jdbcType=VARCHAR},
+      company_website = #{companyWebsite,jdbcType=VARCHAR}
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select `id`, system_name, company_name, company_phone, company_fax, company_address,
+    company_website
+    from t_system
+    where `id` = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectAllForList" resultMap="BaseResultMap" >
+     select `id`, system_name, company_name, company_phone, company_fax, company_address,
+    company_website
+    from t_system
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_system
+    where `id` = #{id,jdbcType=BIGINT}
+  </delete>
+</mapper>

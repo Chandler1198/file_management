@@ -1,0 +1,14 @@
+cn\charge\ssmv\mapper\ArcreturnMapper.class
+cn\charge\ssmv\mapper\PermissionMapper.class
+cn\charge\ssmv\mapper\BorrowandarcreturnMapper.class
+cn\charge\ssmv\mapper\RoleMapper.class
+cn\charge\ssmv\mapper\LostDamageMapper.class
+cn\charge\ssmv\mapper\UserMapper.class
+cn\charge\ssmv\mapper\DepartmentMapper.class
+cn\charge\ssmv\mapper\SystemdictionarytypeMapper.class
+cn\charge\ssmv\mapper\MenuMapper.class
+cn\charge\ssmv\mapper\LostQueryMapper.class
+cn\charge\ssmv\mapper\SystemMapper.class
+cn\charge\ssmv\mapper\ArchiveMapper.class
+cn\charge\ssmv\mapper\SystemdictionarydetailMapper.class
+cn\charge\ssmv\mapper\BorrowMapper.class

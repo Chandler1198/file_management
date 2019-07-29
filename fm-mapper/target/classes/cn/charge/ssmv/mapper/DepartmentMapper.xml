@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.charge.ssmv.mapper.DepartmentMapper" >
+
+  <resultMap id="BaseResultMap" type="cn.charge.ssmv.domain.Department" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="depart_iden" property="departIden" jdbcType="VARCHAR" />
+    <result column="depart_name" property="departName" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="fax" property="fax" jdbcType="VARCHAR" />
+    <result column="depart_src" property="departSrc" jdbcType="VARCHAR" />
+    <result column="Superdepart_id" property="superdepartId" jdbcType="BIGINT" />
+    <result column="depart_manager" property="departManager" jdbcType="VARCHAR" />
+  </resultMap>
+
+
+
+  <insert id="insert" parameterType="cn.charge.ssmv.domain.Department" useGeneratedKeys="true" keyProperty="id" >
+    insert into t_department (depart_iden, depart_name, phone, 
+      fax, depart_src, Superdepart_id, 
+      depart_manager)
+    values (#{departIden,jdbcType=VARCHAR}, #{departName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{fax,jdbcType=VARCHAR}, #{departSrc,jdbcType=VARCHAR}, #{superdepartId,jdbcType=BIGINT}, 
+      #{departManager,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.charge.ssmv.domain.Department" >
+    update t_department
+    set depart_iden = #{departIden,jdbcType=VARCHAR},
+      depart_name = #{departName,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      fax = #{fax,jdbcType=VARCHAR},
+      depart_src = #{departSrc,jdbcType=VARCHAR},
+      Superdepart_id = #{superdepartId,jdbcType=BIGINT},
+      depart_manager = #{departManager,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, depart_iden, depart_name, phone, fax, depart_src, Superdepart_id, depart_manager
+    from t_department
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+
+
+  <select id="selectAllForList" resultMap="BaseResultMap" >
+    select id, depart_iden, depart_name, phone, fax, depart_src, Superdepart_id, depart_manager
+    from t_department
+
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_department
+    where `id` = #{id,jdbcType=BIGINT}
+  </delete>
+</mapper>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.charge.ssmv.mapper.ArcreturnMapper" >
+  <resultMap id="BaseResultMap" type="cn.charge.ssmv.domain.Arcreturn" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="return_date" property="returnDate" jdbcType="TIMESTAMP" />
+    <result column="return_remarks" property="returnRemarks" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_arcreturn
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.charge.ssmv.domain.Arcreturn" useGeneratedKeys="true" keyProperty="id" >
+    insert into t_arcreturn (user_id, return_date, return_remarks
+      )
+    values (#{userId,jdbcType=BIGINT}, #{returnDate,jdbcType=TIMESTAMP}, #{returnRemarks,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.charge.ssmv.domain.Arcreturn" >
+    update t_arcreturn
+    set user_id = #{userId,jdbcType=BIGINT},
+      return_date = #{returnDate,jdbcType=TIMESTAMP},
+      return_remarks = #{returnRemarks,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, user_id, return_date, return_remarks
+    from t_arcreturn
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAllForList" resultMap="BaseResultMap" >
+    select id, user_id, return_date, return_remarks
+    from t_arcreturn
+  </select>
+</mapper>

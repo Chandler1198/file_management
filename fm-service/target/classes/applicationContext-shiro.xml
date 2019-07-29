@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+    <!--shiro的核心对象已经交给spring管理-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="FmRealm"/>
+    </bean>
+
+
+    <bean id="FmRealm" class="cn.charge.ssmv.realm.FmRealm">
+        <property name="credentialsMatcher">
+            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+                <!--加密方式-->
+                <property name="hashAlgorithmName" value="MD5"/>
+                <!--加密次数-->
+                <property name="hashIterations" value="10"/>
+            </bean>
+        </property>
+    </bean>
+
+
+    <!--
+        shiro最核心的配置       处理请求的具体方式
+        注意：该bean的id对应的值必须要和代理过滤器的名字一致，否则报错
+    -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <!--如果没有认证，都跳到loginUrl对应的路径-->
+        <property name="loginUrl" value="/login"/>
+        <!--如果认证通过之后，就跳到successUrl对应的路径-->
+        <property name="successUrl" value="/s/success.jsp"/>
+        <!--如果你访问某个资源，没有权限，就跳到unauthorizedUrl对应的路径中-->
+        <property name="unauthorizedUrl" value="/s/shirohtml/shiro.jsp"/>
+        <property name="filterChainDefinitionMap" ref="powerfilter"/>
+        <!--自定义过滤器-->
+        <property name="filters">
+            <map>
+                <entry key="Perms">
+                    <bean class="cn.charge.ssmv.realm.PermissionFilter"/>
+                </entry>
+            </map>
+        </property>
+        <!--        <property name="filterChainDefinitions">
+                    <value>
+                        &lt;!&ndash;
+                            anon:匿名过滤器，直接放行
+                            authc:必须认证通过后，才能放行，否则跳到loginUrl对应的路径中&ndash;&gt;
+                        /images/**=anon
+                        /randomCode=anon
+                        /plugins/**=anon
+                        /login=anon
+                        /logout=logout
+                        /** = authc
+
+                    </value>
+                </property>-->
+    </bean>
+    <bean id="powerfilter" factory-bean="powerfiltershiro" factory-method="PowerMap"/>
+    <bean id="powerfiltershiro" class="cn.charge.ssmv.realm.Powerfiltershiro"/>
+
+</beans>

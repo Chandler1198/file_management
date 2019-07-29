@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.charge.ssmv.mapper.BorrowMapper" >
+  <resultMap id="BaseResultMap" type="cn.charge.ssmv.domain.Borrow" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="borrow_name" property="borrowName"  />
+    <result column="borrow_number" property="borrowNumber" />
+    <result column="borrow_phone" property="borrowPhone"  />
+
+    <result column="borrow_date" property="borrowDate"  />
+    <result column="return_date" property="returnDate" />
+    <result column="borrow_remarks" property="borrowRemarks" />
+    <result column="borrow_state" property="borrowState"  />
+    <result column="systemdictionary" property="systemdictionary" />
+
+
+    <association property="arcUser" columnPrefix="u_" javaType="cn.charge.ssmv.domain.User">
+      <id column="id" property="id"/>
+      <result column="id" property="id"/>
+      <result column="user_name" property="userName"/>
+      <result column="real_name" property="realName"/>
+    </association>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_borrow
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.charge.ssmv.domain.Borrow" useGeneratedKeys="true" keyColumn="id" keyProperty="id" >
+    insert into t_borrow (borrow_name, borrow_number, borrow_phone, 
+      arc_user, borrow_date, return_date,
+      borrow_remarks, borrow_state, systemdictionary
+      )
+    values (#{borrowName}, #{borrowNumber}, #{borrowPhone},
+      #{arcUser.id}, #{borrowDate}, #{returnDate},
+      #{borrowRemarks}, #{borrowState}, #{systemdictionary}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.charge.ssmv.domain.Borrow" >
+    update t_borrow
+    set borrow_name = #{borrowName},
+      borrow_number = #{borrowNumber},
+      borrow_phone = #{borrowPhone},
+      arc_user = #{arcUser,id},
+      borrow_date = #{borrowDate},
+      return_date = #{returnDate},
+      borrow_remarks = #{borrowRemarks},
+      borrow_state = #{borrowState},
+      systemdictionary = #{systemdictionary}
+    where id = #{id}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, borrow_name, borrow_number, borrow_phone, arc_user, borrow_date, return_date,
+    borrow_remarks, borrow_state, systemdictionary
+    from t_borrow
+    where id = #{id}
+  </select>
+  <select id="selectAllForList" resultMap="BaseResultMap" >
+    select id, borrow_name, borrow_number, borrow_phone, arc_user, borrow_date, return_date,
+    borrow_remarks, borrow_state, systemdictionary
+    from t_borrow
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, borrow_name, borrow_number, borrow_phone, arc_ser, borrow_date, return_date,
+    borrow_remarks, borrow_state, systemdictionary
+    from t_borrow
+  </select>
+
+  <select id="selectByRealName" resultType="cn.charge.ssmv.domain.User">
+    select distinct
+    u.id ,u.user_name as u_userName,u.password,u.real_name as u_realName,u.telephone,u.education,u.address,u.sex,u.birth,u.remarks,u.state
+    from
+    t_borrow AS a JOIN t_user AS u ON u.real_name = #{realName}
+  </select>
+
+
+
+</mapper>

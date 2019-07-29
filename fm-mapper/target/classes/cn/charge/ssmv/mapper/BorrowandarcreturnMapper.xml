@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.charge.ssmv.mapper.BorrowandarcreturnMapper" >
+  <resultMap id="BaseResultMap" type="cn.charge.ssmv.domain.Borrowandarcreturn" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="archive_id" property="archiveId" jdbcType="BIGINT" />
+    <result column="borrow_id" property="borrowId" jdbcType="BIGINT" />
+    <result column="arcreturn_id" property="arcreturnId" jdbcType="BIGINT" />
+    <association property="archive" columnPrefix="a_" javaType="cn.charge.ssmv.domain.Archive">
+      <id column="id" property="id" />
+      <result column="id" property="id"/>
+      <result column="arc_num" property="arcNum"/>
+      <result column="arc_title" property="arcTitle"/>
+      <result column="arc_type" property="arcType" />
+      <result column="borrow_statu" property="borrowStatu" />
+    </association>
+    <association property="borrow" columnPrefix="b_" javaType="cn.charge.ssmv.domain.Borrow">
+      <id column="id" property="id" />
+      <result column="id" property="id"/>
+      <result column="borrow_name" property="borrowName" />
+      <result column="borrow_date" property="borrowDate" />
+      <result column="return_date" property="returnDate" />
+    </association>
+    <association property="arcreturn" columnPrefix="ar_" javaType="cn.charge.ssmv.domain.Arcreturn">
+      <id column="id" property="id" />
+      <result column="id" property="id"/>
+      <result column="return_date" property="returnDate" />
+    </association>
+
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_borrowandarcreturn
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.charge.ssmv.domain.Borrowandarcreturn" useGeneratedKeys="true" keyProperty="id" >
+    insert into t_borrowandarcreturn (archive_id, borrow_id, arcreturn_id
+      )
+    values (#{archiveId,jdbcType=BIGINT}, #{borrowId,jdbcType=BIGINT}, #{arcreturnId,jdbcType=BIGINT}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.charge.ssmv.domain.Borrowandarcreturn" >
+    update t_borrowandarcreturn
+    set archive_id = #{archiveId,jdbcType=BIGINT},
+      borrow_id = #{borrowId,jdbcType=BIGINT},
+      arcreturn_id = #{arcreturnId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, archive_id, borrow_id, arcreturn_id
+    from t_borrowandarcreturn
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAllForList" resultMap="BaseResultMap" >
+   select
+
+   ba.id, b.id AS b_id,b.borrow_name AS b_borrow_name ,b.borrow_date AS b_borrow_date ,b.return_date AS b_return_date ,
+
+  a.id AS a_id,a.arc_num AS a_arc_num,a.arc_title AS a_arc_title ,a.arc_type AS a_arc_type,a.borrow_statu AS a_borrow_statu,
+
+  ar.id AS ar_id,ar.return_date as ar_return_date
+
+  from t_borrowandarcreturn ba
+
+  LEFT JOIN t_borrow as b ON ba.borrow_id = b.id
+
+  LEFT JOIN t_archive a ON ba.archive_id = a.id
+
+  LEFT JOIN t_arcreturn AS ar ON ba.arcreturn_id = ar.id
+  </select>
+
+
+
+
+
+
+</mapper>

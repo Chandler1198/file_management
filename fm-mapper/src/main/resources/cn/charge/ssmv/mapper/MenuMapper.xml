@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.charge.ssmv.mapper.MenuMapper" >
+  <resultMap id="BaseResultMap" type="cn.charge.ssmv.domain.Menu" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+    <result column="descs" property="descs" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+  </resultMap>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_menu
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.charge.ssmv.domain.Menu" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_menu (id, name, url,
+    parent_id, descs,
+    state)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+    #{parentId,jdbcType=BIGINT}, #{descs,jdbcType=VARCHAR},
+    #{state,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.charge.ssmv.domain.Menu" >
+    update t_menu
+    set name = #{name,jdbcType=VARCHAR},
+    url = #{url,jdbcType=VARCHAR},
+    parent_id = #{parentId,jdbcType=BIGINT},
+    descs = #{descs,jdbcType=VARCHAR},
+    state = #{state,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, name, url, parent_id, descs, state
+    from t_menu
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, name, url, icon, parent_id, descs, state
+    from t_menu
+  </select>
+
+
+  <select id="findMenuByLoginuser" resultMap="BaseResultMap" parameterType="long">
+    SELECT DISTINCT u.user_name,m.*
+    FROM t_user u JOIN t_user_role ur ON u.id=ur.user_id
+    JOIN t_role r ON ur.role_id=r.id
+    JOIN t_role_permission rp ON r.id=rp.role_id
+    JOIN t_permission p ON rp.permission_id=p.id
+    JOIN t_menu m ON p.menu_id=m.id WHERE u.id=#{id} and p.state=0
+  </select>
+</mapper>

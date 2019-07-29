@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+
+				http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+    <bean id="systemlogUtil" class="cn.charge.ssmv.realm.SystemlogUtil"/>
+
+
+    <!-- cron表达式:在每天早上8点到晚上8点期间每1分钟触发一次 -->
+    <!--value>0 0/1 8-20 * * ?</value -->
+    <!-- cron表达式:每5分钟触发一次 -->
+    <!-- <value>0 0/5 * * * ?</value> -->
+
+    <task:scheduled-tasks>
+        <!-- 执行quartzJob里面的work方法，执行频率是cron表达式 -->
+        <task:scheduled ref="systemlogUtil" method="back" cron="0 0/10 * * * ? " />
+        <!--每天3点执行-->
+        <!--<task:scheduled ref="systemlogUtil" method="back" cron="0 0 3 * * ? *" />-->
+    </task:scheduled-tasks>
+</beans>

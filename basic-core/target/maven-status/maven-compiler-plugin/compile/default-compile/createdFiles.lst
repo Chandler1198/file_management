@@ -1,0 +1,4 @@
+cn\charge\ssmv\service\BaseService.class
+cn\charge\ssmv\mapper\BaseMapper.class
+cn\charge\ssmv\query\BaseQuery.class
+cn\charge\ssmv\service\impl\BaseServiceImpl.class

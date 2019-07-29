@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.charge.ssmv.mapper.RoleMapper" >
+  <resultMap id="BaseResultMap" type="cn.charge.ssmv.domain.Role" >
+    <id column="id" property="id" />
+    <result property="roleName" column="role_name"/>
+    <result property="roleId" column="role_id"/>
+    <result property="remarks" column="remarks"/>
+    <result property="state" column="state"/>
+
+    <collection property="permissions" ofType="cn.charge.ssmv.domain.Permission">
+      <id property="id" column="p_id"/>
+      <result property="url" column="url"/>
+      <result property="name" column="name"/>
+      <result property="sn" column="sn"/>
+    </collection>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_role
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.charge.ssmv.domain.Role" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_role (id, role_id, role_name, 
+      remarks, state)
+    values (#{id,jdbcType=BIGINT}, #{roleId,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR}, 
+      #{remarks,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.charge.ssmv.domain.Role" >
+    update t_role
+    set role_id = #{roleId,jdbcType=INTEGER},
+      role_name = #{roleName,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, role_id, role_name, remarks, state
+    from t_role
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    SELECT DISTINCT r.id, r.role_id, r.role_name, r.remarks, r.state ,p.id as p_id,p.`name`,p.sn from t_role r
+    JOIN t_role_permission tp ON r.id=tp.role_id
+    JOIN t_permission p on p.id=tp.permission_id
+  </select>
+  <!--高级分页查询 根据角色名称-->
+  <select id="selectAllForList" resultMap="BaseResultMap">
+    SELECT DISTINCT r.id, r.role_id, r.role_name, r.remarks, r.state ,p.id as p_id,p.`name`,p.sn from t_role r
+    JOIN t_role_permission tp ON r.id=tp.role_id
+    JOIN t_permission p on p.id=tp.permission_id
+    <where>
+      <if test="keyname !=null">
+        AND r.role_name LIKE concat("%",#{keyname},"%")
+      </if>
+    </where>
+  </select>
+</mapper>

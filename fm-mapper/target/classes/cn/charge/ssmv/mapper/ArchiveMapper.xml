@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.charge.ssmv.mapper.ArchiveMapper">
+    <resultMap id="BaseResultMap" type="cn.charge.ssmv.domain.Archive">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="arc_num" property="arcNum" jdbcType="VARCHAR"/>
+        <result column="arc_type" property="arcType" jdbcType="VARCHAR"/>
+        <result column="arc_path" property="arcPath" jdbcType="VARCHAR"/>
+        <result column="arc_title" property="arcTitle" jdbcType="VARCHAR"/>
+        <!--<result column="arc_user" property="arcUser" jdbcType="BIGINT" />-->
+        <result column="created_date" property="createdDate" jdbcType="TIMESTAMP"/>
+        <result column="modify_user" property="modifyUser" jdbcType="VARCHAR"/>
+        <result column="modify_date" property="modifyDate" jdbcType="DATE"/>
+        <result column="borrow_statu" property="borrowStatu" jdbcType="INTEGER"/>
+        <result column="expiration_time" property="expirationTime" jdbcType="DATE"/>
+        <result column="expiration_notice" property="expirationNotice" jdbcType="INTEGER"/>
+        <result column="notification_day" property="notificationDay" jdbcType="INTEGER"/>
+        <result column="content_archive" property="contentArchive" jdbcType="VARCHAR"/>
+        <result column="content_validity" property="contentValidity" jdbcType="VARCHAR"/>
+        <result column="commonly_used" property="commonlyUsed" jdbcType="INTEGER"/>
+        <result column="doc_num" property="docNum" jdbcType="INTEGER"/>
+        <result column="com_depart" property="comDepart" jdbcType="VARCHAR"/>
+        <result column="publish_unit" property="publishUnit" jdbcType="VARCHAR"/>
+        <result column="publisher" property="publisher" jdbcType="VARCHAR"/>
+        <result column="approval_time" property="approvalTime" jdbcType="TIMESTAMP"/>
+        <result column="identifica_time" property="identificaTime" jdbcType="TIMESTAMP"/>
+        <result column="product_num" property="productNum" jdbcType="VARCHAR"/>
+        <result column="raw_number" property="rawNumber" jdbcType="VARCHAR"/>
+        <result column="number" property="number" jdbcType="INTEGER"/>
+        <result column="page" property="page" jdbcType="INTEGER"/>
+        <result column="patent_no" property="patentNo" jdbcType="VARCHAR"/>
+        <result column="inspect_person" property="inspectPerson" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+        <association property="arcUser" columnPrefix="u_" javaType="cn.charge.ssmv.domain.User">
+            <id column="id" property="id"/>
+            <result column="id" property="id"/>
+            <result column="user_name" property="userName"/>
+            <result column="real_name" property="realName"/>
+            <result column="depart_in" property="departIn"/>
+            <result column="entry_time" property="entryTime"/>
+        </association>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_archive
+    where `id` = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="cn.charge.ssmv.domain.Archive">
+    insert into t_archive (`id`, arc_num, arc_type, 
+      arc_path, arc_title, arc_user, 
+      created_date, modify_user, modify_date, 
+      borrow_statu, expiration_time, expiration_notice, 
+      notification_day, content_archive, content_validity, 
+      commonly_used, doc_num, com_depart, 
+      publish_unit, publisher, approval_time, 
+      identifica_time, product_num, raw_number, 
+      number, page, patent_no, 
+      inspect_person, state)
+    values (#{id,jdbcType=BIGINT}, #{arcNum,jdbcType=VARCHAR}, #{arcType,jdbcType=VARCHAR}, 
+      #{arcPath,jdbcType=VARCHAR}, #{arcTitle,jdbcType=VARCHAR}, #{arcUser.id,jdbcType=BIGINT},
+      #{createdDate,jdbcType=TIMESTAMP}, #{modifyUser,jdbcType=VARCHAR}, #{modifyDate,jdbcType=DATE}, 
+      #{borrowStatu,jdbcType=INTEGER}, #{expirationTime,jdbcType=DATE}, #{expirationNotice,jdbcType=INTEGER}, 
+      #{notificationDay,jdbcType=INTEGER}, #{contentArchive,jdbcType=VARCHAR}, #{contentValidity,jdbcType=VARCHAR},
+      #{commonlyUsed,jdbcType=INTEGER}, #{docNum,jdbcType=INTEGER}, #{comDepart,jdbcType=VARCHAR}, 
+      #{publishUnit,jdbcType=VARCHAR}, #{publisher,jdbcType=VARCHAR}, #{approvalTime,jdbcType=TIMESTAMP}, 
+      #{identificaTime,jdbcType=TIMESTAMP}, #{productNum,jdbcType=VARCHAR}, #{rawNumber,jdbcType=VARCHAR}, 
+      #{number,jdbcType=INTEGER}, #{page,jdbcType=INTEGER}, #{patentNo,jdbcType=VARCHAR}, 
+      #{inspectPerson,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="cn.charge.ssmv.domain.Archive">
+    update t_archive
+    set arc_num = #{arcNum,jdbcType=VARCHAR},
+      arc_type = #{arcType,jdbcType=VARCHAR},
+      arc_path = #{arcPath,jdbcType=VARCHAR},
+      arc_title = #{arcTitle,jdbcType=VARCHAR},
+      arc_user = #{arcUser.id,jdbcType=BIGINT},
+      created_date = #{createdDate},
+      modify_user = #{modifyUser,jdbcType=VARCHAR},
+      modify_date = #{modifyDate},
+      borrow_statu = #{borrowStatu,jdbcType=INTEGER},
+      expiration_time = #{expirationTime},
+      expiration_notice = #{expirationNotice,jdbcType=INTEGER},
+      notification_day = #{notificationDay,jdbcType=INTEGER},
+      content_archive = #{contentArchive,jdbcType=VARCHAR},
+      content_validity = #{contentValidity,jdbcType=VARCHAR},
+      commonly_used = #{commonlyUsed,jdbcType=INTEGER},
+      doc_num = #{docNum,jdbcType=INTEGER},
+      com_depart = #{comDepart,jdbcType=VARCHAR},
+      publish_unit = #{publishUnit,jdbcType=VARCHAR},
+      publisher = #{publisher,jdbcType=VARCHAR},
+      approval_time = #{approvalTime},
+      identifica_time = #{identificaTime},
+      product_num = #{productNum,jdbcType=VARCHAR},
+      raw_number = #{rawNumber,jdbcType=VARCHAR},
+      number = #{number,jdbcType=INTEGER},
+      page = #{page,jdbcType=INTEGER},
+      patent_no = #{patentNo,jdbcType=VARCHAR},
+      inspect_person = #{inspectPerson,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER}
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select `id`, arc_num, arc_type, arc_path, arc_title, arc_user, created_date, modify_user, 
+    modify_date, borrow_statu, expiration_time, expiration_notice, notification_day, 
+    content_archive, content_validity, commonly_used, doc_num, com_depart, publish_unit, 
+    publisher, approval_time, identifica_time, product_num, raw_number, number, page, 
+    patent_no, inspect_person, state
+    from t_archive
+    where `id` = #{id,jdbcType=BIGINT}
+  </select>
+    <select id="selectAllForList" resultMap="BaseResultMap">
+    select a.`id`, a.arc_num, a.arc_type, a.arc_path, a.arc_title, u.id AS u_id, u.real_name AS u_real_name , a.created_date, a.modify_user,
+    a.modify_date, a.borrow_statu, a.expiration_time, a.expiration_notice, a.notification_day,
+    a.content_archive, a.content_validity, a.commonly_used, a.doc_num, a.com_depart, a.publish_unit,
+    a.publisher, a.approval_time, a.identifica_time, a.product_num, a.raw_number, a.number, a.page,
+    a.patent_no, a.inspect_person, a.state
+    from
+    t_archive AS a LEFT JOIN t_user AS u ON a.arc_user = u.id
+  </select>
+
+    <select id="selectByRealName" resultType="cn.charge.ssmv.domain.User">
+    select distinct
+      u.id ,u.user_name as u_userName,u.password,u.real_name as u_realName,u.identity,u.depart_in as u_departIn,u.entry_time as u_entryTime,u.telephone,u.education,u.address,u.sex,u.birth,u.remarks,u.state
+    from
+      t_archive AS a JOIN t_user AS u ON (u.user_name = #{realName} or u.real_name = #{realName})
+  </select>
+  
+  
+  <update id="updateByPrimaryStatu" parameterType="cn.charge.ssmv.domain.Archive">
+        update t_archive
+        set arc_num = #{arcNum,jdbcType=VARCHAR},
+        arc_type = #{arcType,jdbcType=VARCHAR},
+        arc_path = #{arcPath,jdbcType=VARCHAR},
+        arc_title = #{arcTitle,jdbcType=VARCHAR},
+        created_date = #{createdDate,jdbcType=TIMESTAMP},
+        modify_user = #{modifyUser,jdbcType=VARCHAR},
+        modify_date = #{modifyDate,jdbcType=DATE},
+        borrow_statu = #{borrowStatu,jdbcType=INTEGER},
+        expiration_time = #{expirationTime,jdbcType=DATE},
+        expiration_notice = #{expirationNotice,jdbcType=INTEGER},
+        notification_day = #{notificationDay,jdbcType=INTEGER},
+        content_archive = #{contentArchive,jdbcType=VARCHAR},
+        content_validity = #{contentValidity,jdbcType=VARCHAR},
+        commonly_used = #{commonlyUsed,jdbcType=INTEGER},
+        doc_num = #{docNum,jdbcType=INTEGER},
+        com_depart = #{comDepart,jdbcType=VARCHAR},
+        publish_unit = #{publishUnit,jdbcType=VARCHAR},
+        publisher = #{publisher,jdbcType=VARCHAR},
+        approval_time = #{approvalTime,jdbcType=TIMESTAMP},
+        identifica_time = #{identificaTime,jdbcType=TIMESTAMP},
+        product_num = #{productNum,jdbcType=VARCHAR},
+        raw_number = #{rawNumber,jdbcType=VARCHAR},
+        number = #{number,jdbcType=INTEGER},
+        page = #{page,jdbcType=INTEGER},
+        patent_no = #{patentNo,jdbcType=VARCHAR},
+        inspect_person = #{inspectPerson,jdbcType=VARCHAR},
+        state = #{state,jdbcType=INTEGER}
+        where `id` = #{id,jdbcType=BIGINT}
+    </update>
+
+</mapper>

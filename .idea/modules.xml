@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/basic-core/basic-core.iml" filepath="$PROJECT_DIR$/basic-core/basic-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/basic-util/basic-util.iml" filepath="$PROJECT_DIR$/basic-util/basic-util.iml" />
+      <module fileurl="file://$PROJECT_DIR$/basic-velocity/basic-velocity.iml" filepath="$PROJECT_DIR$/basic-velocity/basic-velocity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fm-common/fm-common.iml" filepath="$PROJECT_DIR$/fm-common/fm-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fm-mapper/fm-mapper.iml" filepath="$PROJECT_DIR$/fm-mapper/fm-mapper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fm-service/fm-service.iml" filepath="$PROJECT_DIR$/fm-service/fm-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fm-web/fm-web.iml" filepath="$PROJECT_DIR$/fm-web/fm-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/management_file.iml" filepath="$PROJECT_DIR$/management_file.iml" />
+    </modules>
+  </component>
+</project>

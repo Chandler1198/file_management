@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>management_file</artifactId>
+        <groupId>cn.charge.ssmv</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>basic-velocity</artifactId>
+
+    <name>basic-velocity</name>
+
+    <dependencies>
+        <!--velocity依赖-->
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
+            <version>2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.charge.ssmv</groupId>
+            <artifactId>basic-util</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.charge.ssmv</groupId>
+            <artifactId>fm-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.charge.ssmv</groupId>
+            <artifactId>fm-mapper</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>
